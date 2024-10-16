@@ -31,10 +31,14 @@ app.listen(process.env.PORT , () => {
 
 // Connect to MongoDB
 const url = process.env.MONGO_URL;  // Ensure you have this in your .env file
-mongoose.connect(url)
-    .then(() => {
-        console.log('Connected to MongoDB');
-    })
-    .catch((err) => {
-        console.error('Error connecting to MongoDB:', err);
-    });
+const connection = mongoose.createConnection(url, {
+    
+});
+
+connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
+
+connection.on('error', (err) => {
+    console.error('Error connecting to MongoDB:', err);
+});
